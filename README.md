@@ -1,3 +1,7 @@
+## Screenshot at first commit
+
+![screenshot_v1](https://github.com/guidolarosa/av_studio/blob/master/public/screenshot_v1.png?raw=true)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

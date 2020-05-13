@@ -30,7 +30,7 @@ export default ProductItem;
 
 const StyledProductItem = styled.li`
     display: inline-block;
-    width: 23%;
+    width: 24%;
     cursor: pointer;
     margin-bottom: 20px;
     .title-container {

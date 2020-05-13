@@ -19,6 +19,12 @@ const StyledModal = styled.section`
                 background: black;
                 width: 100%;
                 height: 300px;
+                .video-placeholder {
+                    width: 80%;
+                    height: 100%;
+                    margin: 0 auto;
+                    background-size: cover;
+                } 
             }
             .modal-header {
                 display: flex;
@@ -88,6 +94,7 @@ const Modal = ({
 }) => {
     const modalNode = document.getElementById('modal-root');
     const vimeoID = productData.product_vimeo_id[0].text;
+    console.log(productData)
     return (
         ReactDOM.createPortal(
             (<StyledModal
@@ -111,7 +118,11 @@ const Modal = ({
                         </span>
                     </section>
                     <section className="video-container">
-
+                        <section 
+                        className="video-placeholder"
+                        style={{
+                            backgroundImage: `url(${productData.product_thumbnail.url})`
+                        }}></section>
                     </section>
                 </section>
             </StyledModal>

@@ -4,12 +4,16 @@ import styled from 'styled-components';
 import PaginationControl from './../components/ColorGrading/PaginationControl';
 import ProductItem from './../components/ColorGrading/ProductItem';
 import {useParams, useHistory} from 'react-router-dom';
+import Modal from './../components/common/Modal'
 
 
 const ColorGrading = props => {
     const [prismicResponse, setPrismicResponse] = useState([]);
     const [allProducts, setAllProducts] = useState(null);
+    const [currentPageProducts, setCurrentPageProducts] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedProductIndex, setSelectedProductIndex] = useState(null);
     const { page } = useParams();
     let history = useHistory();
     
@@ -28,7 +32,7 @@ const ColorGrading = props => {
         }
         
         setAllProducts(separatedArray);
-        console.log(separatedArray[0]);
+        // console.log(separatedArray[0]);
     }
     
     const handleKeyDown = keyCode => {
@@ -46,13 +50,23 @@ const ColorGrading = props => {
                 setCurrentPage(currentPage - 1);
             }
         }
+    };
+
+    const handleModalClose = () => {
+        setSelectedProductIndex(null)
     }
+
+    useEffect(() => {
+        if (allProducts) {
+            setCurrentPageProducts(allProducts[currentPage - 1]);
+        }
+    }, [currentPage, allProducts])
 
     useEffect(() => {
         if (page) {
             setCurrentPage(parseInt(page))
         }
-    }, [])
+    }, []);
     
     useEffect(() => {
         const getPrismicResponse = async () => {
@@ -70,47 +84,87 @@ const ColorGrading = props => {
 
     useEffect(() => {
         history.push("/color-grading&page=" + currentPage)
-    }, [currentPage])
-        
+    }, [currentPage]);
+
+    useEffect(() => {
+        // console.log(selectedProductIndex);
+    }, [selectedProductIndex])
+
     return (
-        <section
-            onKeyDown={(e) => {handleKeyDown(e.keyCode)}}
-            tabIndex="0"
-        >
-            <h1>Color Grading</h1>
-            <StyledProductContainer>
-                {allProducts ? (
-                    <>
-                        <ul className="product-list">
-                            {allProducts[currentPage - 1].map((product) => (
-                                <ProductItem
-                                    category={product.primary.product_title[0].text}
-                                    productTitle={product.primary.product_title[0].text} 
-                                    thumbnailUrl={product.primary.product_thumbnail.url}
-                                    productCategory={product.primary.product_type}
-                                />
-                            ))}
-                        </ul>
-                        <PaginationControl
-                            currentPage={currentPage}
-                            totalPages={allProducts.length}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </>
-                ) : (
-                    <span>No products</span>
-                )}
-            </StyledProductContainer>
-        </section>
+        <StyledColorGrading className="color-grading">
+            <section
+                onKeyDown={(e) => {handleKeyDown(e.keyCode)}}
+                tabIndex="0"
+            >
+                <section className="title-container">
+                    <h1>Color Grading</h1>
+                    <section className="filter">
+                        <span>Filter by </span>
+                    </section>
+                </section>
+                <StyledProductContainer>
+                    {allProducts ? (
+                        <>
+                            <ul className="product-list">
+                                {allProducts[currentPage - 1].map((product, index) => (
+                                    <ProductItem
+                                        key={index}
+                                        category={product.primary.product_title[0].text}
+                                        productTitle={product.primary.product_title[0].text} 
+                                        thumbnailUrl={product.primary.product_thumbnail.url}
+                                        productCategory={product.primary.product_type}
+                                        onClick={() => {
+                                            setSelectedProductIndex(index);
+                                            setIsModalOpen(true);
+                                        }}
+                                    />
+                                ))}
+                            </ul>
+                            {
+                                selectedProductIndex != null && 
+                                (<Modal 
+                                    productID={selectedProductIndex}
+                                    isModalOpen={isModalOpen}
+                                    productData={
+                                        currentPageProducts[selectedProductIndex].primary
+                                        }
+                                    closeModal={() => {setIsModalOpen(false)}}>
+                                </Modal>)
+                            }
+                            <PaginationControl
+                                currentPage={currentPage}
+                                totalPages={allProducts.length}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </>
+                    ) : (
+                        <span>No products</span>
+                    )}
+                </StyledProductContainer>
+            </section>
+        </StyledColorGrading>
     )
 };
 
 export default ColorGrading;
 
+const StyledColorGrading = styled.section`
+    .title-container {
+        display: flex;
+        justify-content: space-between;
+        .filter {
+            align-self: flex-end;
+            font-size: .8rem;
+            opacity: .7;
+        }
+    }
+`
+
 const StyledProductContainer = styled.section`
     display: flex;
     flex-direction: column;
     height: 72vh;
+    margin-top: 20px;
     .product-list {
         display: flex;
         flex-grow: 1;

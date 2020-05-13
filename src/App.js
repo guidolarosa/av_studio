@@ -21,7 +21,7 @@ const StyledApp = styled.section`
 		margin-top: 20px;
 		h1 {
 			font-size: 3rem;
-			margin-bottom: 20px;
+			color: #FFFDF2;
 		}
 	}
 `;

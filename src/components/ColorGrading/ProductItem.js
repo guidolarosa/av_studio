@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import palette from './../../utils/palette';
 
 const ProductItem = props => {
     return (
-        <StyledProductItem title={props.productTitle}>
+        <StyledProductItem 
+            title={props.productTitle}
+            onClick={props.onClick}>
             <section className="title-container">
                 <h2>
                     <span 
@@ -52,7 +55,19 @@ const StyledProductItem = styled.li`
                 transform: scale(3);
                 margin-right: 5px;
                 &.largometraje {
-                    color: green;
+                    color: ${palette('blue')};
+                }
+                &.cortometraje {
+                    color: ${palette('red')};
+                }
+                &.videoclip {
+                    color: ${palette('green')};
+                }
+                &.comercial {
+                    color: ${palette('yellow')};
+                }
+                &.serie {
+                    color: ${palette('purple')};
                 }
             }
         }

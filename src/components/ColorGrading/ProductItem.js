@@ -42,6 +42,7 @@ const StyledProductItem = styled.li`
             opacity: .8;
             margin-bottom: 5px;
             font-size: 1rem;
+            font-weight: normal;
             display: inline-block;
             background: transparent;
             position: relative;

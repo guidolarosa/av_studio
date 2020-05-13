@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import {
 	BrowserRouter as Router, 
 	Switch,
-	Route
-} from 'react-router-dom'
+	Route,
+	useParams
+} from 'react-router-dom';
 import './App.css';
-import routes from './utils/routes';
+import {routes, paths} from './utils/routes';
+import Main from './components/common/Main';
 import Navbar from './components/common/Navbar';
 import ColorGrading from './pages/ColorGrading.js';
 import Contact from './pages/Contact.js';
@@ -26,20 +28,19 @@ const StyledApp = styled.section`
 	}
 `;
 
-function App() {
+const App = props => {
 	return (
 		<Router>
 			<StyledApp>
-				<Navbar routes={routes}/>
-				<main>
-					<Switch>
-						{routes.map(route => (
-							<Route path={route.url}>
-								<route.renderedComponent />
-							</Route>
-						))}
-					</Switch>
-				</main>
+				<Switch>
+					{paths.map((path, index)=> (
+						<Route path={path} key={index}>
+							<Navbar routes={routes}></Navbar>
+							<Main />
+						</Route>
+						)
+					)}
+				</Switch>
 			</StyledApp>
 		</Router>
 	);	

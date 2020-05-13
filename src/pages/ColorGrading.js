@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import PaginationControl from './../components/ColorGrading/PaginationControl';
 import ProductItem from './../components/ColorGrading/ProductItem';
 import {useParams, useHistory} from 'react-router-dom';
-import Modal from './../components/common/Modal'
-
+import Modal from './../components/common/Modal';
+import Loader from './../components/common/Loader';
 
 const ColorGrading = props => {
     const [prismicResponse, setPrismicResponse] = useState([]);
@@ -32,7 +32,6 @@ const ColorGrading = props => {
         }
         
         setAllProducts(separatedArray);
-        // console.log(separatedArray[0]);
     }
     
     const handleKeyDown = keyCode => {
@@ -138,7 +137,7 @@ const ColorGrading = props => {
                             />
                         </>
                     ) : (
-                        <span>No products</span>
+                        <Loader></Loader>
                     )}
                 </StyledProductContainer>
             </section>

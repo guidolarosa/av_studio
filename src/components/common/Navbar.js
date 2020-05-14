@@ -4,16 +4,25 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 
 const StyledNavbar = styled.div`
     background: #595d67;
-    padding: 15px 30px;
+    padding: 10px 30px;
     border-radius: 50px;
-    ul {
-        display: flex;
-        justify-content: space-between;
-        width: 40%;
-        margin-left: 60%;
-        li {
-            display: inline-block;
-            font-size: .8rem;
+    display: flex;
+    h1 {
+        padding: 0;
+        margin: 0;
+    }
+    nav {
+        flex-grow: 1;
+        ul {
+            display: flex;
+            justify-content: space-between;
+            width: 50%;
+            margin-left: 50%;
+            li {
+                display: inline-block;
+                font-size: .8rem;
+                line-height: 1.7rem;
+            }
         }
     }
 `;
@@ -22,6 +31,7 @@ const Navbar = props => {
     const { section } = useParams();
     return (
         <StyledNavbar>
+            <h1>Crows Nest</h1>
             <nav>
                 <ul>
                     {props.routes.map(route => (

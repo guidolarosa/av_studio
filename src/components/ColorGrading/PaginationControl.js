@@ -6,10 +6,14 @@ const PaginationControl = ({
     style,
     setCurrentPage,
     currentPage,
-    totalPages
+    totalPages,
+    isModalOpen
 }) => {
     return (
-        <StyledPaginationControl className="pagination-controls">
+        <StyledPaginationControl 
+            className={'pagination-controls ' + 
+                isModalOpen ? 'dimmed' : ''
+            }>
             <span 
                 onClick={() => {setCurrentPage(currentPage - 1)}}
                 className={
@@ -23,12 +27,12 @@ const PaginationControl = ({
             {style == 'full' ? (
             <section className="list-selector-container">
                 <ul className="page-list">
-                    {[...Array(totalPages)].map((e,index) => (
+                    {[...Array(totalPages)].map((i) => (
                         <li 
-                            className={index + 1 == currentPage ? 'selected' : ''}
-                            onClick={() => {setCurrentPage(index + 1)}}
-                            key={index}>
-                            {index + 1}
+                            className={i + 1 == currentPage ? 'selected' : ''}
+                            onClick={() => {setCurrentPage(i + 1)}}
+                            key={i}>
+                            {i + 1}
                         </li>))
                     }
                 </ul>
@@ -61,6 +65,9 @@ const StyledPaginationControl = styled.section`
     margin-top: 10px;
     text-align: center;
     padding-bottom: 10px;
+    &.dimmed {
+        opacity: .3;
+    }
     .control {
         cursor: pointer;
         position: relative;
@@ -100,7 +107,7 @@ const StyledPaginationControl = styled.section`
     }
     .input-selector-container {
         text-align: center;
-        width: 50%;
+        width: 20%;
         display: inline-block;
         margin: auto;
         .total-pages {

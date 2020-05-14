@@ -76,7 +76,8 @@ const StyledProductItem = styled.li`
     .product-thumbnail {
         width: 100%;
         height: 25vh;
-        background-size: cover;
+        background-size: 120%;
+        background-position: center;
         border-radius: 3px;
     }
 `;

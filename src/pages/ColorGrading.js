@@ -134,6 +134,7 @@ const ColorGrading = props => {
                                 currentPage={currentPage}
                                 totalPages={allProducts.length}
                                 setCurrentPage={setCurrentPage}
+                                isModalOpen={isModalOpen}
                             />
                         </>
                     ) : (
